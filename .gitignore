@@ -1,2 +1,14 @@
 __pycache__
 .vscode
+
+# Large raw LiDAR data (11 GB+) -- fetch with src/collect_dsm.py
+data/raw/dsm_tiles/
+data/raw/dsm_montreal.tif
+
+# Large processed GeoJSON (300-500 MB each) -- regenerate with pipeline
+data/processed/buildings_features.geojson
+data/processed/buildings_predicted.geojson
+data/processed/buildings_economics.geojson
+
+# Crash-recovery shards (intermediate, not needed for reproducibility)
+data/processed/dsm_shards/
