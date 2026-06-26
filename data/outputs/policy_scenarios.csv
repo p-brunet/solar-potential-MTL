@@ -1,0 +1,6 @@
+Scenario,Median payback (yr),% payback < 25 yr,% NPV > 0,Viable buildings,Median NPV (k CAD)
+Baseline -- PGIR 3.5%/yr,24.0,17.7,0.0,0,-11.5
+HQ buyback doubled (7 c/kWh),22.0,38.2,0.0,0,-9.6
+High escalation 5%/yr (PGIR high),23.0,40.0,0.0,0,-10.0
+Federal ITC 45%,22.0,42.6,0.0,0,-7.4
+Combined optimistic,19.0,90.4,24.8,53736,-2.9
