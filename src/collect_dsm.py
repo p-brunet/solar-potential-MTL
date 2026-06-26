@@ -103,7 +103,11 @@ def clip_and_reproject(dsm_url: str, bbox: tuple, out_path: Path) -> bool:
 
 
 def write_manifest(tile_entries: list[tuple[str, str, Path]], out_path: Path) -> None:
-    """Write JSON manifest [{path, date, bounds}] for all valid tiles, newest first."""
+    """Write JSON manifest [{path, date, bounds}] for all valid tiles, newest first.
+
+    Paths are stored relative to the project root so the manifest is portable.
+    """
+    root = Path(__file__).parent.parent
     records = []
     for tile_id, date, tile_path in tile_entries:
         with rasterio.open(tile_path) as src:
@@ -111,7 +115,7 @@ def write_manifest(tile_entries: list[tuple[str, str, Path]], out_path: Path) ->
         records.append({
             "tile_id": tile_id,
             "date": date,
-            "path": str(tile_path),
+            "path": str(Path(tile_path).relative_to(root)),
             "bounds": [b.left, b.bottom, b.right, b.top],
         })
     out_path.parent.mkdir(parents=True, exist_ok=True)

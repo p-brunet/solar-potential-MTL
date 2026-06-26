@@ -104,8 +104,12 @@ def load_manifest(manifest_path: Path) -> list[dict]:
 
     All clipped tiles share the same bounding box, so a bounds check alone
     cannot distinguish coverage. A decimated mask read once per tile fixes this.
+    Paths in the manifest are relative to the project root and resolved here.
     """
+    root = manifest_path.parent.parent
     records = json.loads(manifest_path.read_text())
+    for rec in records:
+        rec["path"] = str(root / rec["path"])
     scale = 50
     for rec in records:
         with rasterio.open(rec["path"]) as src:
