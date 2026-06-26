@@ -18,7 +18,6 @@ import numpy as np
 import rasterio
 from pyproj import Transformer
 from rasterio.windows import from_bounds
-from shapely.geometry import box
 
 from config import CRS_PROJECT, DATA_RAW, DATA_OUTPUTS
 
@@ -26,7 +25,7 @@ DSM_PATH = DATA_RAW / "dsm_montreal.tif"
 BUILDINGS_PATH = DATA_RAW / "buildings_mtl.geojson"
 OUT_PNG = DATA_OUTPUTS / "dsm_validation.png"
 
-DEFAULT_HALF_M = 600  # metres each side → 1.2 km × 1.2 km patch
+DEFAULT_HALF_M = 600  # metres each side -> 1.2 km × 1.2 km patch
 
 
 def _find_valid_centre(dsm_path: Path) -> tuple[float, float]:
@@ -80,7 +79,6 @@ def main(lat: float | None = None, lon: float | None = None, half_m: float = DEF
     with rasterio.open(DSM_PATH) as src:
         win = from_bounds(left, bottom, right, top, src.transform)
         dem = src.read(1, window=win)
-        win_transform = src.window_transform(win)
         nodata = src.nodata
         res = src.res[0]
 
@@ -89,7 +87,6 @@ def main(lat: float | None = None, lon: float | None = None, half_m: float = DEF
         dem[dem == nodata] = np.nan
 
     # --- Load buildings clipped to window ---
-    bbox_wgs = box(*_centre_window(lat, lon, half_m * 1.05, "EPSG:4326"))  # slight buffer for clip
     tr_back = Transformer.from_crs(CRS_PROJECT, "EPSG:4326", always_xy=True)
     x1, y1 = tr_back.transform(left, bottom)
     x2, y2 = tr_back.transform(right, top)
