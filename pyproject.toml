@@ -6,6 +6,7 @@ dependencies = [
     "geopandas>=0.14",
     "pvlib>=0.10",
     "xgboost>=2.0",
+    "scikit-learn>=1.4",
     "shap>=0.44",
     "folium>=0.15",
     "requests>=2.31",
@@ -19,6 +20,9 @@ dependencies = [
     "pyarrow>=24.0.0",
     "fsspec>=2026.4.0",
     "aiohttp>=3.13.5",
+    "xarray>=2026.4.0",
+    "rioxarray>=0.22.0",
+    "dask>=2026.3.0",
 ]
 
 [build-system]
